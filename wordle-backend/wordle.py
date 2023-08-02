@@ -3,15 +3,27 @@
 import sys
 import random
 from utils.dictionary import load_dictionary
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask("Wordle")
+CORS(app)
+# TODO as object
+g_dictionary = ["hello"]
+g_word = "hello"
+
 #from colorama import Fore, Style
 
 #        print(f"\033[92m{word}\033[00m") green
 #        print(f"\033[93m{word}\033[00m") yellow
 #        print(f"\033[90m{word}\033[00m") grey
 
-def compare_strings(word, guess):
+@app.route("/guess", methods = ["POST"])
+def compare_strings():
     """_summary_"""
-
+    guess = request.get_json()["guess"]
+    print(guess)
+    word = g_word
     state = ["yellow", "yellow", "yellow", "yellow", "yellow"]
     for index, (w_char, g_char) in enumerate(zip(word, guess)):
         if w_char == g_char:
@@ -37,7 +49,7 @@ def compare_strings(word, guess):
         print(num_g)
         if num < num_g:
             state[i] = "grey"
-    return state
+    return jsonify(valid=True, state=state)
 
 def print_guess(guess, state):
     """_summary_"""
@@ -77,15 +89,20 @@ def wordle(word, dictionary):
             print(f"\033[91m The word was: {word}\033[00m")
             break
 
-    
-def main(filename):
-    dictionary = load_dictionary(filename)
-
-    word = random.choice(dictionary)
+@app.route('/start')
+def start():
+    word = random.choice(g_dictionary)
     print(word)
-    wordle(word, dictionary)
+    return jsonify(success=True)
+
+def main(filename):
+    g_dictionary = load_dictionary(filename)
+    print(len(g_dictionary))
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("One required argument: dictionary file")
-    main(sys.argv[1])
+    g_dictionary = load_dictionary(sys.argv[1])
+    print(len(g_dictionary))
+    app.run("localhost", 6969)

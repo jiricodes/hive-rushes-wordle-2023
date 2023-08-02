@@ -7,3 +7,6 @@ The project has been developed using Python 3.9.2
 The usage of virtual environment is highly suggested
 
 Intall requirements using `pip install -r requirements.txt`
+
+## post command
+`curl -X POST localhost:6969/guess -H 'Content-Type: application/json' -d '{"guess": "solos"}'`
