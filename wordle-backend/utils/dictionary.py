@@ -1,15 +1,22 @@
-from error import InvalidDictionary
+class InvalidDictionary(Exception):
+
+    def __init__(self, message = "") -> None:
+        self.message = message
+        super().__init__(self.message)
 
 def validate_dictionary(words):
+    for word in words:
+        if len(word) != 5 or not word.isalpha():
+            raise InvalidDictionary(f"Invalid word {word}")
+
     set_words = set(words)
     if len(words) != len(set_words):
-        raise InvalidDictionary
-    pass
+        raise InvalidDictionary("Contains duplicates")
 
 def load_dictionary(filename):
-with open(sys.argv[1], "r") as f:
-    for line in f.readlines():
-        line = line.strip()
-        if len(line) != 5 or not line.isalpha():
-            print(f"error at {line}")
-            exit(1)
+    words = []
+    with open(filename, "r") as f:
+        for line in f.readlines():
+            words.append(line.strip())
+    validate_dictionary(words)
+    return words
