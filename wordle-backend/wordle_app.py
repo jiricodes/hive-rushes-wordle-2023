@@ -5,6 +5,7 @@ import random
 from utils.dictionary import load_dictionary
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from brain.game import evaluate_guess 
 
 app = Flask("Wordle")
 CORS(app)
@@ -24,31 +25,7 @@ def compare_strings():
     guess = request.get_json()["guess"]
     print(guess)
     word = g_word
-    state = ["yellow", "yellow", "yellow", "yellow", "yellow"]
-    for index, (w_char, g_char) in enumerate(zip(word, guess)):
-        if w_char == g_char:
-            state[index] = "green"
-        else:
-            find_index = word.find(g_char)
-            if find_index == -1:
-                state[index] = "grey"  
-                
-    new_word = []
-    new_guess = []
-    new_indeces = []
-    for i, c in  enumerate(word):
-        if state[i] != "green":
-            new_word.append(c)
-            if state[i] == "yellow":
-                new_guess.append(guess[i])
-                new_indeces.append(i)
-    for guess_i, (c, i) in  enumerate(zip(new_guess, new_indeces)):
-        num = new_word.count(c)
-        num_g = new_guess[:guess_i+1].count(c)
-        print(num)
-        print(num_g)
-        if num < num_g:
-            state[i] = "grey"
+    state = evaluate_guess(word, guess)
     return jsonify(valid=True, state=state)
 
 def print_guess(guess, state):
