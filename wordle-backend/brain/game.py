@@ -25,8 +25,6 @@ def evaluate_guess(word, guess):
     for guess_i, (c, i) in  enumerate(zip(new_guess, new_indeces)):
         num = new_word.count(c)
         num_g = new_guess[:guess_i+1].count(c)
-        print(num)
-        print(num_g)
         if num < num_g:
             state[i] = "grey"
     return state
