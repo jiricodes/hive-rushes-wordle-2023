@@ -7,39 +7,53 @@ import random
 #        print(f"\033[92m{word}\033[00m") green
 #        print(f"\033[93m{word}\033[00m") yellow
 #        print(f"\033[90m{word}\033[00m") grey
+
 def compare_strings(word, guess):
     """_summary_"""
 
-    #need to find the word inside the list
-    result = True
     state = ["yellow", "yellow", "yellow", "yellow", "yellow"]
-    #pass through string and save state, pass and mark grey and green: then second pass decide if yellow or grey if no green or grey
     for index, (w_char, g_char) in enumerate(zip(word, guess)):
-        #The zip function is used to combine multiple iterables (e.g., lists, tuples) into a single iterator of tuples.
-        #Each tuple contains the elements from the corresponding positions of the input iterables.
-        # Check if the current characters x and y are different
         if w_char == g_char:
             state[index] = "green"
         else:
             find_index = word.find(g_char)
             if find_index == -1:
-                state[index] = "grey"
-    print(state)
+                state[index] = "grey"  
+                
     new_word = []
     new_guess = []
+    new_indeces = []
     for i, c in  enumerate(word):
         if state[i] != "green":
             new_word.append(c)
             if state[i] == "yellow":
                 new_guess.append(guess[i])
-
+                new_indeces.append(i)
+    for guess_i, (c, i) in  enumerate(zip(new_guess, new_indeces)):
+        num = new_word.count(c)
+        num_g = new_guess[:guess_i+1].count(c)
+        print(num)
+        print(num_g)
+        if num < num_g:
+            state[i] = "grey"
     return state
 
+def print_guess(guess, state):
+    """_summary_"""
+    
+    for index, c in enumerate(guess):
+        if state[index] == "green":
+            print (f"\033[92m{c}\033[00m", end="")
+        if state[index] == "yellow":
+            print(f"\033[93m{c}\033[00m", end="") 
+        if state[index] == "grey":
+            print(f"\033[90m{c}\033[00m", end="")
+    print("")
 
 def wordle(word, dictionary):
     """_summary_"""
 
-    count = 0
+    count = 1
 
     while count <= 6:
         increase = True
@@ -50,16 +64,15 @@ def wordle(word, dictionary):
         if guess not in dictionary:
             print(f"\033[91m{guess} is not a valid word\033[00m")
             continue
-        if increase is True:
-            state = compare_strings(word, guess)
+        state = compare_strings(word, guess)
         state_count = state.count("green")
         if state_count == 5:
             print(f"\033[92m{guess}\033[00m")
             print("\033[92mCorrect!\033[00m")
             break
-        if increase is True:
-            count += 1
-        if count > 6:
+        print_guess(guess, state)
+       	count += 1
+        if count == 7:
             print(f"\033[91m The word was: {word}\033[00m")
             break
 
@@ -70,7 +83,7 @@ def main(filename):
         dictionary = []
         dictionary = file.readlines()
     dictionary = [line.replace('\n', '') for line in dictionary]
-    word = random.choice(dictionary)
+    word = "woods" #random.choice(dictionary)
     print(word)
     wordle(word, dictionary)
 
