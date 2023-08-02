@@ -2,6 +2,7 @@
 # should take the dictionary as an argument
 import sys
 import random
+from utils.dictionary import load_dictionary
 #from colorama import Fore, Style
 
 #        print(f"\033[92m{word}\033[00m") green
@@ -65,11 +66,8 @@ def wordle(word, dictionary):
 
     
 def main(filename):
-    """_summary_"""
-    with open(filename, 'r', encoding='ascii') as file:
-        dictionary = []
-        dictionary = file.readlines()
-    dictionary = [line.replace('\n', '') for line in dictionary]
+    dictionary = load_dictionary(filename)
+
     word = random.choice(dictionary)
     print(word)
     wordle(word, dictionary)
