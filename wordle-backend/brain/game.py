@@ -39,7 +39,6 @@ class WordleGame:
         return response
 
 def evaluate_guess(word, guess):
-    """_summary_"""
     state = ["yellow", "yellow", "yellow", "yellow", "yellow"]
     for index, (w_char, g_char) in enumerate(zip(word, guess)):
         if w_char == g_char:
@@ -66,5 +65,3 @@ def evaluate_guess(word, guess):
 
 if __name__ == "__main__":
     game = WordleGame("resources/words.txt")
-    print(len(game.g_dictionary))
-    word = game.start_game()
