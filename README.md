@@ -1,6 +1,7 @@
 # hive-rushes-wordle-2023
 A 48 hours coding challenge under 42 curriculum.
-Creators: [jiricodes](https://github.com/jiricodes) [jaurasma](https://github.com/Jaurasma) [ShereeMorphett](https://github.com/ShereeMorphett) 
+
+Creators: [jiricodes](https://github.com/jiricodes) | [jaurasma](https://github.com/Jaurasma) | [ShereeMorphett](https://github.com/ShereeMorphett) 
 
 ## Requirements
 The project has been developed using Python 3.9.2
