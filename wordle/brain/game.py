@@ -10,7 +10,7 @@ class WordleGame:
     def restart_game(self):
         self.guess_count = 0
         self.g_word = random.choice(self.g_dictionary)
-        print(f"current word: {self.g_word}")
+        # print(f"current word: {self.g_word}")
     
     def valid_guess(self, guess):
         return guess in self.g_dictionary
