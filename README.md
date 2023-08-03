@@ -1,6 +1,7 @@
 # hive-rushes-wordle-2023
 A 48 hours coding challenge under 42 curriculum.
-Creators: https://github.com/jiricodes https://github.com/Jaurasma https://github.com/ShereeMorphett 
+
+Creators: [jiricodes](https://github.com/jiricodes) | [jaurasma](https://github.com/Jaurasma) | [ShereeMorphett](https://github.com/ShereeMorphett) 
 
 ## Requirements
 The project has been developed using Python 3.9.2
@@ -11,7 +12,7 @@ Install requirements using `pip install -r requirements.txt`
 or manually:
  - flask
  - flask-cors
- - pytest
+ - pytest (optional for few tests)
 
 ## How to Play
 Clone the repository to your local machine.
@@ -21,7 +22,7 @@ Navigate to the project directory.
 
 Run the CLI version of the game using the following command:
 ```
-python wordle-backend/wordle_cli.py resources/words.txt
+python wordle/wordle_cli.py resources/words.txt
 ```
 
 Note: The resources/words.txt file contains a dictionary of valid English words, where all the words used and given are strictly 5-letter words from the English language.
@@ -34,5 +35,13 @@ Correct letter in the wrong spot: Turn yellow
 Incorrect letter: Turn grey
 Keep guessing until you find the word or use all 6 attempts.
 
-## post command
-`curl -X POST localhost:6969/api/v1/guess -H 'Content-Type: application/json' -d '{"guess": "solos"}'`
+### Web Interface
+In your terminal run:
+```
+python wordle/wordle_app.py resources/words.txt
+```
+
+Open the displayed address in your browser (by default `localhost:6969`) and enjoy.
+
+### Tests
+And incomplete suite of tests is included with the project. Currently it tests only the guessing mechanic. Can be run with `pytest` from the root folder.
