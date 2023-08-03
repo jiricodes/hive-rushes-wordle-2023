@@ -3,7 +3,6 @@
 <head>
   <title>Wordle</title>
   {% include "meta.html" %}
-  <!-- <link rel="stylesheet" href="styles.css"> -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
 </head>
 <body>
@@ -154,46 +153,6 @@
 		</div>
   <!-- closing tag of the grid -->
   </div>
-
-
-  <!-- this is the web keyboard, need to fix the js to acctaully get it working -->
-  <!-- <h2> Dont use the web keyboard on rows last  space right now, thank you! </h2> -->
-  <div class="keyboard">
-	<div class="keyboard-row">
-		<button data-letter="Q">Q</button>
-		<button data-letter="W">W</button>
-		<button data-letter="E">E</button>
-		<button data-letter="R">R</button>
-		<button data-letter="T">T</button>
-		<button data-letter="Y">Y</button>
-		<button data-letter="U">U</button>
-		<button data-letter="I">I</button>
-		<button data-letter="O">O</button>
-		<button data-letter="P">P</button>
-	</div>
-	<div class="keyboard-row">
-		<button data-letter="A">A</button>
-		<button data-letter="S">S</button>
-		<button data-letter="D">D</button>
-		<button data-letter="F">F</button>
-		<button data-letter="G">G</button>
-		<button data-letter="H">H</button>
-		<button data-letter="J">J</button>
-		<button data-letter="K">K</button>
-		<button data-letter="L">L</button>
-	</div>
-	<div class="keyboard-row">
-		<button data-letter="Z">Z</button>
-		<button data-letter="X">X</button>
-		<button data-letter="C">C</button>
-		<button data-letter="V">V</button>
-		<button data-letter="B">B</button>
-		<button data-letter="N">N</button>
-		<button data-letter="M">M</button>
-		<button id="delete-button">⌫</button>
-	</div>
-  </div>
-  <!-- <script src="js/script.js"></script> -->
   <!-- do not touch!!! -->
   <script src="{{ url_for("static", filename="js/script.js") }}" defer></script>
 	</div>
