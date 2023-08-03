@@ -38,7 +38,6 @@ class WordleGame:
             self.restart_game()
         return response
 
-
 def evaluate_guess(word, guess):
     """_summary_"""
     state = ["yellow", "yellow", "yellow", "yellow", "yellow"]
@@ -69,4 +68,3 @@ if __name__ == "__main__":
     game = WordleGame("resources/words.txt")
     print(len(game.g_dictionary))
     word = game.start_game()
-    print(word)
