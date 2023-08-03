@@ -4,6 +4,7 @@ import sys
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from brain.game import evaluate_guess
+from brain.game import Game
 
 
 def test_woods_solos():
@@ -56,3 +57,26 @@ def test_emcee_emeer():
     expected = ["green", "green", "yellow", "green", "grey"]
     print(f"ret = {ret}")
     assert ret == expected
+
+def test_burnt_toast():
+    ret = evaluate_guess("burnt", "toast")
+    expected = ["grey", "grey", "grey", "grey", "green"]
+    assert ret == expected
+
+def test_maxim_mamma():
+    ret = evaluate_guess("maxim", "mamma")
+    expected = ["green", "green", "yellow", "grey", "grey"]
+    assert ret == expected
+
+def test_swift_iiwis():
+    ret = evaluate_guess("swift", "iiwis")
+    expected = ["yellow", "grey", "yellow", "grey", "yellow"]
+    assert ret == expected
+
+def test_validate_guess():
+    game = Game(["aaa", "bbb", "ccc", "ddd"])
+    assert game.validate_guess("aaa")
+    assert game.validate_guess("ccc")
+    assert game.validate_guess("ccc")
+
+
