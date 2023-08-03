@@ -12,6 +12,7 @@ wordle_game: WordleGame
 
 @app.route('/')
 def index():
+    wordle_game.restart_game()
     return render_template("index.html")
 
 @app.route("/api/v1/guess", methods=["POST"])
@@ -32,6 +33,5 @@ if __name__ == "__main__":
         print("One required argument: dictionary file")
     else:
         wordle_game = WordleGame(sys.argv[1])
-        print(len(wordle_game.g_dictionary))
         app.run("localhost", 6969)
 
