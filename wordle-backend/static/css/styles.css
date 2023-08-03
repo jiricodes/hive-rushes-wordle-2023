@@ -1,0 +1,92 @@
+body {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		margin: 0;
+		background-color: #f0f0f0;
+	}
+	
+	.game-container {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		min-height: 100vh;
+		margin: 0;
+		background-color: #f0f0f0;
+	}
+	
+	.grid-container {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		max-width: 500px; /* Adjust this value as needed */
+		margin: 0 auto;
+	}
+	
+	.grid-row {
+		display: flex;
+	}
+	.box {
+		width: 62px; /* Adjust this value to your desired box size */
+		height: 62px; /* Adjust this value to your desired box size */
+		margin: 2px; /* Adjust this value to add spacing between the boxes */
+		background-color: #333; /* Or any color you prefer */
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		text-align: center; /* Added to center the text horizontally */
+		font-family: 'Roboto', sans-serif;
+
+	}
+	.box.selected-box {
+		background-color: rgb(80, 77, 77);
+	}
+	
+	span {
+		font-size: 35px;
+		color: #fff; /* Set the color to your preference */
+		display: flex; /* Changed from flex to inline-flex */
+		justify-content: center;
+		align-items: center;
+		width: 100%;
+		height: 100%;
+		font-family: 'Roboto', sans-serif;
+
+	}
+	
+	input {
+		width: 100%;
+		text-align: center;
+		font-size: 16px;
+		padding: 0px;
+		border: none;
+		background: transparent;
+		color: transparent; /* Set the color to your preference */
+		outline: none;
+	}
+
+	.keyboard {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin-top: 20px; /* Adjust the spacing between grid and keyboard */
+		margin-bottom: 20px; /* Add margin at the bottom to separate the grid and keyboard */
+	}
+	/* Add styles for each keyboard row */
+	.keyboard-row {
+		display: flex;
+		justify-content: center;
+	}
+	
+	/* Add styles for the keyboard buttons */
+	.keyboard button {
+		font-size: 20px;
+		padding: 8px 12px;
+		margin: 4px;
+		border: 1px solid #333;
+		background-color: #f0f0f0;
+		cursor: pointer;
+	}

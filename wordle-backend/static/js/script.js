@@ -5,12 +5,12 @@ const boxElements = document.querySelectorAll('.box');
 const rowContainers = document.querySelectorAll('.grid-row');
 let keyboardButtons;
  function sendRowDataToServer(rowData) {
-   fetch('localhost:6969/guess', {
+   fetch('/api/v1/guess', {
  	method: 'POST',
  	headers: {
  	  'Content-Type': 'application/json',
  	},
- 	body: JSON.stringify({ row: rowData }),
+ 	body: JSON.stringify({ guess: rowData }),
    })
  	.then((response) => response.json())
  	.then((data) => {
