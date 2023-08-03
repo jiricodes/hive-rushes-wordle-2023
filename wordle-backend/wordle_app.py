@@ -3,16 +3,23 @@
 import sys
 import random
 from utils.dictionary import load_dictionary
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 from brain.game import WordleGame 
+from werkzeug.middleware.proxy_fix import ProxyFix
 
-app = Flask("Wordle")
+#app = Flask("Wordle", static_folder='static', template_folder='templates')
+app = Flask(__name__)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
 CORS(app)
 
 wordle_game = None
 
-@app.route("/guess", methods=["POST"])
+@app.route('/')
+def index():
+    return render_template("index.html")
+
+@app.route("/api/v1/guess", methods=["POST"])
 def compare_strings():
     """_summary_"""
     guess = request.get_json()["guess"]
@@ -20,7 +27,7 @@ def compare_strings():
     body = wordle_game.guess_round(guess)
     return jsonify(body)
 
-@app.route('/start')
+@app.route('/api/v1/start')
 def start():
     word = wordle_game.restart_game()
     print(word)

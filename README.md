@@ -13,4 +13,4 @@ or manually:
  - pytest
 
 ## post command
-`curl -X POST localhost:6969/guess -H 'Content-Type: application/json' -d '{"guess": "solos"}'`
+`curl -X POST localhost:6969/api/v1/guess -H 'Content-Type: application/json' -d '{"guess": "solos"}'`
