@@ -35,5 +35,11 @@ Correct letter in the wrong spot: Turn yellow
 Incorrect letter: Turn grey
 Keep guessing until you find the word or use all 6 attempts.
 
-## post command
-`curl -X POST localhost:6969/api/v1/guess -H 'Content-Type: application/json' -d '{"guess": "solos"}'`
+### Web Interface
+In your terminal run:
+```
+python wordle-backend/wordle_app.py resources/words.txt
+```
+
+Open the displayed address in your browser (by default `localhost:6969`) and enjoy.
+
