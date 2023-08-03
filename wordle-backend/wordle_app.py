@@ -17,7 +17,8 @@ def index():
 @app.route("/api/v1/guess", methods=["POST"])
 def compare_strings():
     """_summary_"""
-    guess = request.get_json()["guess"]
+    guess = "".join(request.get_json()["guess"])
+    guess = guess.lower()
     print(guess)
     body = wordle_game.guess_round(guess)
     return jsonify(body)
