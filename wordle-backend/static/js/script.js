@@ -1,45 +1,50 @@
 const gridContainer = document.querySelector('.grid-container');
 let selectedBox = null;
+var isItValid;
 
 const boxElements = document.querySelectorAll('.box');
 const rowContainers = document.querySelectorAll('.grid-row');
 let keyboardButtons;
 
-function sendRowData(rowContainer) {
-	const boxElementsInRow = rowContainer.querySelectorAll('.box');
-	const rowData = [];
-	
-	boxElementsInRow.forEach((box) => {
-		const input = box.querySelector('input');
-		const value = input.value.toUpperCase();
-		rowData.push(value);
-	});
-	
-	sendRowDataToServer(rowData);
+async function sendRowData(rowContainer) {
+    const boxElementsInRow = rowContainer.querySelectorAll('.box');
+    const rowData = [];
+
+    boxElementsInRow.forEach((box) => {
+        const input = box.querySelector('input');
+        const value = input.value.toUpperCase();
+        rowData.push(value);
+    });
+
+    // Wait for the response from the server using await
+    const validRow = await sendRowDataToServer(rowData, rowContainer);
+    console.log("validRow is: " + validRow);
+
+    return validRow;
 }
 
-function sendRowDataToServer(rowData) {
+async function sendRowDataToServer(rowData, rowContainer) {
+    try {
+        const response = await fetch('/api/v1/guess', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ guess: rowData }),
+        });
 
-	fetch('/api/v1/guess', {
-	method: 'POST',
-	headers: {
-		'Content-Type': 'application/json',
-	},
-	body: JSON.stringify({ guess: rowData }),
-	})
-	.then((response) => response.json())
-	.then((data) => {
-		console.log(data.valid);
-	//   console.log(rowData);
-		updateBoxes(rowData, data.valid, data.state, data.stage)
-		return data.valid
-		// Update the front-end based on the response (e.g., set status for each box)
-	})
-	.catch((error) => {
-		console.error('Error:', error);
-		return data.valid;
-	});
+        const data = await response.json();
+        console.log(data);
+        updateBoxes(rowContainer, data.valid, data.state, data.stage);
+        return data.valid;
+    } catch (error) {
+        console.error('Error:', error);
+        return false;
+    }
 }
+
+// Rest of the code remains the same
+
 function focusOnGameBoard() {
 	gridContainer.focus();
   }
@@ -54,8 +59,7 @@ function focusOnFirstBox() {
 function updateBoxes(rowContainer, isValid, stringsFromPython, stage) {
     // Get all the boxes in the row
     const boxElementsInRow = rowContainer.querySelectorAll('.box');
-	console.log(stringsFromPython);
-	let index = 0;
+	console.log(boxElementsInRow);
     // Loop through the box elements and apply the colors based on the numbers received
     if (isValid) {
 		const errorMessage = document.getElementById('error-message');
@@ -93,7 +97,6 @@ function updateBoxes(rowContainer, isValid, stringsFromPython, stage) {
         winMessage.style.display = 'none';
         lossMessage.style.display = 'none';
 	}
-	index = 0;
 }
 document.addEventListener('DOMContentLoaded', () => {
 	focusOnFirstBox(); // Call this function to set the focus on the first box
@@ -157,11 +160,12 @@ function isRowFilled(rowContainer) {
 	return true;
 }
 
-function moveToNextRow(currentRowContainer) {
+async function moveToNextRow(currentRowContainer) {
 	const nextRowContainer = currentRowContainer.nextElementSibling;
 	let validRow;
 	if (nextRowContainer) {
-		validRow = sendRowData(currentRowContainer);
+		validRow = await sendRowData(currentRowContainer);
+		console.log("now we are cheking if row is valid " + validRow);
 		if (validRow == true) {
 		selectedBox.classList.remove('selected-box');
 		selectedBox = nextRowContainer.querySelector('.box');
@@ -174,11 +178,11 @@ function moveToNextRow(currentRowContainer) {
 	}
 }
 
-function moveToNextRowIfFilled(currentRowContainer) {
+async function moveToNextRowIfFilled(currentRowContainer) {
 	const boxElementsInRow = currentRowContainer.querySelectorAll('.box');
 	const lastBox = boxElementsInRow[boxElementsInRow.length - 1];
 	if (isRowFilled(currentRowContainer) && lastBox.classList.contains('selected-box')) {
-		moveToNextRow(currentRowContainer);
+		await moveToNextRow(currentRowContainer);
 	}
 }
 
@@ -261,25 +265,3 @@ gridContainer.addEventListener('keydown', (e) => {
 		e.preventDefault(); // Prevent the default behavior of "Enter" (like submitting a form)
 	}
 });
-
-//arrow movement for debugging
-//  const arrowKeys = ['ArrowLeft', 'ArrowRight'];
-
-//   if (arrowKeys.includes(e.key)) {
-//     e.preventDefault();
-
-//     const currentIndex = Array.from(boxElements).indexOf(selectedBox);
-//     let nextIndex = currentIndex;
-
-//     if (e.key === 'ArrowLeft') {
-//       nextIndex = currentIndex - 1;
-//     } else if (e.key === 'ArrowRight') {
-//       nextIndex = currentIndex + 1;
-//     }
-//     if (nextIndex >= 0 && nextIndex < boxElements.length) {
-//       selectedBox.classList.remove('selected-box');
-//       selectedBox = boxElements[nextIndex];
-//       selectedBox.classList.add('selected-box');
-//       selectedBox.querySelector('input').focus();
-//     }
-//   } else 
