@@ -69,15 +69,8 @@ function updateBoxes(rowContainer, isValid, stringsFromPython, stage) {
 		errorMessage.style.display = 'block';
 		console.log('Row is not valid. You need to modify the current row.');
 	}
-	if (stage == "win") {
-		const winMessage = document.getElementById('win-message');
-		winMessage.style.display = 'block';
-		console.log('Game won');
-	}
-	else if (stage == "loss") {
-		const lossMessage = document.getElementById('loss-message');
-		lossMessage.style.display = 'block';
-		console.log('Game lost');
+	if (stage == "win" || stage == "loss") {
+		endGame(stage);
 	}
 	else {
 		const winMessage = document.getElementById('win-message');
@@ -186,3 +179,18 @@ document.addEventListener('pointerdown', (e) => {
 	}
 	focusOnGameBoard();
 });
+
+function endGame(result) {
+    // Display the win or loss message
+    if (result === 'win') {
+        const winMessage = document.getElementById('win-message');
+        winMessage.style.display = 'block';
+        console.log('Game won');
+		selectedBox = null;
+    } else if (result === 'loss') {
+        const lossMessage = document.getElementById('loss-message');
+        lossMessage.style.display = 'block';
+        console.log('Game lost');
+		selectedBox = null;
+    }
+}
