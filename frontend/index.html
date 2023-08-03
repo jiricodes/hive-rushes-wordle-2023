@@ -7,149 +7,156 @@
 </head>
 <body>
 	<div class="game-container">
+	<div class="text-container">
+	<div id="error-message" style="display: none;" class="error">Not in word list</div>
+	<div id="win-message" style="display: none;" class="win">Impressive, you won the game!</div>
+	<div id="loss-message" style="display: none;" class="loss">You lost!</div>
+	</div>
 	<div class="grid-container">
 		<!-- row one -->
 		<div class="grid-row">
-			<div class="box">
+			<div class="box" data-index="0">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="1">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="2">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="3">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="4">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
 		</div>
 		<!-- row two -->
 		<div class="grid-row">
-			<div class="box">
+			<div class="box" data-index="0">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="1">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="2">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="3">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="4">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
 		</div>
 		<!-- row three -->
 		<div class="grid-row">
-			<div class="box">
+			<div class="box" data-index="0">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="1">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="2">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="3">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="4">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
 		</div>
 		<!-- row four -->
 		<div class="grid-row">
-			<div class="box">
+			<div class="box" data-index="0">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="1">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="2">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="3">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="4">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
 		</div>
 		<!-- row five -->
 		<div class="grid-row">
-			<div class="box">
+			<div class="box" data-index="0">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="1">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="2">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="3">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="4">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
 		</div>
 		<!-- row six -->
 		<div class="grid-row">
-			<div class="box">
+			<div class="box" data-index="0">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="1">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="2">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="3">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
-			<div class="box">
+			<div class="box" data-index="4">
 				<span></span>
 				<input type="text" maxlength="1" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '');">
 			</div>
 		</div>
   <!-- closing tag of the grid -->
   </div>
+
+
   <!-- this is the web keyboard, need to fix the js to acctaully get it working -->
-  <h2> Dont use the web keyboard on rows last  space right now, thank you! </h2>
+  <!-- <h2> Dont use the web keyboard on rows last  space right now, thank you! </h2> -->
   <div class="keyboard">
 	<div class="keyboard-row">
 		<button data-letter="Q">Q</button>

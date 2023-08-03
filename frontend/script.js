@@ -4,25 +4,132 @@ let selectedBox = null;
 const boxElements = document.querySelectorAll('.box');
 const rowContainers = document.querySelectorAll('.grid-row');
 let keyboardButtons;
-// function sendRowDataToServer(rowData) {
-//   fetch('/', {
-// 	method: 'POST',
-// 	headers: {
-// 	  'Content-Type': 'application/json',
-// 	},
-// 	body: JSON.stringify({ row: rowData }),
-//   })
-// 	.then((response) => response.json())
-// 	.then((data) => {
-// 	  console.log(data);
-// 	  // Update the front-end based on the response (e.g., set status for each box)
-// 	})
-// 	.catch((error) => {
-// 	  console.error('Error:', error);
-// 	});
+
+// function handleRecivedData() {
+	
 // }
-function sendRowDataToServer(rowData){
-	console.log(rowData);
+
+// function sendRowDataToServer(rowData) {
+//     fetch('localhost:6969/guess', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({ guess: rowData }),
+//     })
+//     .then((response) => response.json())
+// 	.then((data) => {
+// 		console.log(data);
+
+// 	// check the validityty of the row
+// 		const isValid = data.valid;
+// 		//status for each box
+// 		const numbersFromPython = data.state;
+	
+// 		// Get the row container (e.g., assuming you have a selectedRowContainer variable)
+// 		// Replace this with the actual row container element
+// 		const selectedRowContainer = selectedBox.closest('.grid-row');
+	
+// 		// Get all the boxes in the row
+// 		const boxElementsInRow = selectedRowContainer.querySelectorAll('.box');
+// 		const boxElementsInRow = rowData;
+// 		// Loop through the box elements and apply the colors based on the numbers received
+// 		if (isValid) {
+// 			const errorMessage = document.getElementById('error-message');
+// 			errorMessage.style.display = 'none';
+// 			// Loop through the box elements and apply the colors based on the numbers received
+// 			boxElementsInRow.forEach((box, index) => {
+// 			  const number = numbersFromPython[index];
+// 			  if (number === 0) {
+// 				box.style.backgroundColor = 'yellow';
+// 			  } else if (number === 1) {
+// 				box.style.backgroundColor = 'green';
+// 			  } else if (number === -1) {
+// 				box.style.backgroundColor = 'gray';
+// 			  }
+// 			});
+// 		  } else {
+// 			const errorMessage = document.getElementById('error-message');
+// 			errorMessage.style.display = 'block';
+// 			console.log('Row is not valid. You need to modify the current row.');
+// 		  }
+// 	  })
+// 	  .catch((error) => {
+// 		console.error('Error:', error);
+// 	  });
+// 	  return (true);
+// 	}
+	
+// sendRowDataToServer(rowData){
+// 	console.log(rowData);
+// }
+// Test function to simulate server response and update the boxes
+function updateBoxes(rowContainer, isValid, numbersFromPython, stage) {
+    // Get all the boxes in the row
+    const boxElementsInRow = rowContainer.querySelectorAll('.box');
+
+    // Loop through the box elements and apply the colors based on the numbers received
+    if (isValid) {
+		const errorMessage = document.getElementById('error-message');
+        errorMessage.style.display = 'none';
+        // Loop through the box elements and apply the colors based on the numbers received
+        boxElementsInRow.forEach((box, index) => {
+            const number = numbersFromPython[index];
+            if (number === 0) {
+                box.style.backgroundColor = 'rgb(177, 159, 77)';
+            } else if (number === 1) {
+                box.style.backgroundColor = 'rgb(97, 139, 85)';
+            } else if (number === -1) {
+                box.style.backgroundColor = 'dimgray';
+            }
+        });
+    } else {
+        // Row is not valid, you can show an error message or take appropriate action
+		const errorMessage = document.getElementById('error-message');
+        errorMessage.style.display = 'block';
+        console.log('Row is not valid. You need to modify the current row.');
+    }
+	if (stage == "win") {
+		const winMessage = document.getElementById('win-message');
+        winMessage.style.display = 'block';
+        console.log('Game won');
+	}
+	else if (stage == "loss") {
+		const lossMessage = document.getElementById('loss-message');
+        lossMessage.style.display = 'block';
+        console.log('Game lost');
+	}
+	else {
+		const winMessage = document.getElementById('win-message');
+		const lossMessage = document.getElementById('loss-message');
+        winMessage.style.display = 'none';
+        lossMessage.style.display = 'none';
+	}
+}
+
+function testSendRowDataToServer(rowData) {
+    // Simulated server response data (replace this with your test data)
+    const testData = {
+        valid: false,
+        state: [1, 1, 1, 1, 1], // Sample numbers received from the server (yellow, green, gray, yellow, green)
+		stage: "win"
+    };
+
+    // Simulate server response delay (you can remove this in production)
+    setTimeout(() => {
+        console.log('Simulated server response:', testData);
+
+        // Check the validity of the row
+        const isValid = testData.valid;
+
+        // Get the row container (e.g., assuming you have a selectedRowContainer variable)
+        // Replace this with the actual row container element
+        const selectedRowContainer = selectedBox.closest('.grid-row');
+
+        // Call the function to update the boxes with the received data
+        updateBoxes(rowData, isValid, testData.state, testData.stage);
+    }, 10); // Simulated server response delay in milliseconds (1 second)
+	return true;
 }
 
 function focusOnGameBoard() {
@@ -86,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
+//turn the row data to a json:able form
 function sendRowData(rowContainer) {
 	const boxElementsInRow = rowContainer.querySelectorAll('.box');
 	const rowData = [];
@@ -99,6 +207,7 @@ function sendRowData(rowContainer) {
 	sendRowDataToServer(rowData);
 }
 
+//check if the row is filled
 function isRowFilled(rowContainer) {
 	const boxElementsInRow = rowContainer.querySelectorAll('.box');
 	for (let i = 0; i < boxElementsInRow.length; i++) {
@@ -109,22 +218,24 @@ function isRowFilled(rowContainer) {
 	}
 	return true;
 }
-
+//starts the next row
 function moveToNextRow(currentRowContainer) {
 	const nextRowContainer = currentRowContainer.nextElementSibling;
+	let validRow;
 	if (nextRowContainer) {
-		sendRowData(currentRowContainer);
+		validRow = testSendRowDataToServer(currentRowContainer);
+		if (validRow == true) {
 		selectedBox.classList.remove('selected-box');
 		selectedBox = nextRowContainer.querySelector('.box');
 		selectedBox.classList.add('selected-box');
-		selectedBox.querySelector('input').focus();
+		selectedBox.querySelector('input').focus();}
 	} else {
 		if (isRowFilled(currentRowContainer)) {
-			sendRowData(currentRowContainer);
+			testSendRowDataToServer(currentRowContainer);
 		}
 	}
 }
-
+//validity tester
 function moveToNextRowIfFilled(currentRowContainer) {
 	const boxElementsInRow = currentRowContainer.querySelectorAll('.box');
 	const lastBox = boxElementsInRow[boxElementsInRow.length - 1];
@@ -165,6 +276,7 @@ boxElements.forEach((box) => {
   });
 });
 
+//keyboard events
 gridContainer.addEventListener('keydown', (e) => {
 	if (e.key === 'Backspace') {
 		e.preventDefault();

@@ -1,33 +1,40 @@
 body {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		min-height: 100vh;
-		margin: 0;
-		background-color: #f0f0f0;
-	}
-	
-	.game-container {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		min-height: 100vh;
-		margin: 0;
-		background-color: #f0f0f0;
-	}
-	
-	.grid-container {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		max-width: 500px; /* Adjust this value as needed */
-		margin: 0 auto;
-	}
-	
-	.grid-row {
-		display: flex;
-	}
+    display: flex;
+    justify-content: center;
+	flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+.text-container { /* Add this new class for text container */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Align the text at the top of the container */
+    margin-bottom: 20px; /* Add some margin at the bottom to separate the grid and text */
+}
+.game-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Change from 'space-between' to 'center' */
+    max-width: 500px; /* Adjust this value as needed */
+    margin: 0 auto;
+}
+
+.grid-row {
+    display: flex;
+    justify-content: center; /* Add this line to center the row */
+}
 	.box {
 		width: 62px; /* Adjust this value to your desired box size */
 		height: 62px; /* Adjust this value to your desired box size */
@@ -44,7 +51,51 @@ body {
 	.box.selected-box {
 		background-color: rgb(80, 77, 77);
 	}
+
+	.highlight {
+		background-color: yellow; /* Change to the desired color */
+	  }
+
+	  .error {
+		position: absolute;
+		bottom: -50px;
+		left: 50%;
+		transform: translateX(-50%);
+		background-color: black;
+		color: white;
+		padding: 10px;
+		border-radius: 5px;
+		opacity: 0;
+		transition: opacity 0.3s ease-in-out, bottom 0.3s ease-in-out;
+	}
 	
+	.error-message.show {
+		opacity: 1;
+		bottom: 20px;
+	}
+	.win {
+		animation: fadeIn 7s infinite;
+		font-family: 'Roboto', sans-serif;
+		font-size: 60px;
+		text-align: center;
+		text-decoration-line: underline;
+		text-decoration-color: green;  
+	}
+	@keyframes fadeIn {
+		0% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+	.loss {
+		font-family: 'Roboto', sans-serif;
+		font-size: 60px;
+		text-align: center;
+		text-decoration-line: underline;
+		text-decoration-color: red;  
+	} 
 	span {
 		font-size: 35px;
 		color: #fff; /* Set the color to your preference */
