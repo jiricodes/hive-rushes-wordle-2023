@@ -4,27 +4,42 @@ let selectedBox = null;
 const boxElements = document.querySelectorAll('.box');
 const rowContainers = document.querySelectorAll('.grid-row');
 let keyboardButtons;
- function sendRowDataToServer(rowData) {
-   fetch('/api/v1/guess', {
- 	method: 'POST',
- 	headers: {
- 	  'Content-Type': 'application/json',
- 	},
- 	body: JSON.stringify({ guess: rowData }),
-   })
- 	.then((response) => response.json())
- 	.then((data) => {
- 	  console.log(data);
- 	  // Update the front-end based on the response (e.g., set status for each box)
- 	})
- 	.catch((error) => {
- 	  console.error('Error:', error);
- 	});
- }
-//function sendRowDataToServer(rowData){
-//	console.log(rowData);
-//}
 
+function sendRowData(rowContainer) {
+	const boxElementsInRow = rowContainer.querySelectorAll('.box');
+	const rowData = [];
+	
+	boxElementsInRow.forEach((box) => {
+		const input = box.querySelector('input');
+		const value = input.value.toUpperCase();
+		rowData.push(value);
+	});
+	
+	sendRowDataToServer(rowData);
+}
+
+function sendRowDataToServer(rowData) {
+
+	fetch('/api/v1/guess', {
+	method: 'POST',
+	headers: {
+		'Content-Type': 'application/json',
+	},
+	body: JSON.stringify({ guess: rowData }),
+	})
+	.then((response) => response.json())
+	.then((data) => {
+		console.log(data.valid);
+	//   console.log(rowData);
+		updateBoxes(rowData, data.valid, data.state, data.stage)
+		return data.valid
+		// Update the front-end based on the response (e.g., set status for each box)
+	})
+	.catch((error) => {
+		console.error('Error:', error);
+		return data.valid;
+	});
+}
 function focusOnGameBoard() {
 	gridContainer.focus();
   }
@@ -36,6 +51,50 @@ function focusOnFirstBox() {
 	selectedBox.querySelector('input').focus(); // Set focus on the input element
 }
 
+function updateBoxes(rowContainer, isValid, stringsFromPython, stage) {
+    // Get all the boxes in the row
+    const boxElementsInRow = rowContainer.querySelectorAll('.box');
+	console.log(stringsFromPython);
+	let index = 0;
+    // Loop through the box elements and apply the colors based on the numbers received
+    if (isValid) {
+		const errorMessage = document.getElementById('error-message');
+        errorMessage.style.display = 'none';
+        // Loop through the box elements and apply the colors based on the numbers received
+        boxElementsInRow.forEach((box, index) => {
+            const string = stringsFromPython[index];
+            if (string === 'yellow') {
+                box.style.backgroundColor = 'rgb(177, 159, 77)';
+            } else if (string === 'green') {
+                box.style.backgroundColor = 'rgb(97, 139, 85)';
+            } else if (string === 'gray') {
+                box.style.backgroundColor = 'dimgray';
+            }
+        });
+    } else {
+        // Row is not valid, you can show an error message or take appropriate action
+		const errorMessage = document.getElementById('error-message');
+        errorMessage.style.display = 'block';
+        console.log('Row is not valid. You need to modify the current row.');
+    }
+	if (stage == "win") {
+		const winMessage = document.getElementById('win-message');
+        winMessage.style.display = 'block';
+        console.log('Game won');
+	}
+	else if (stage == "loss") {
+		const lossMessage = document.getElementById('loss-message');
+        lossMessage.style.display = 'block';
+        console.log('Game lost');
+	}
+	else {
+		const winMessage = document.getElementById('win-message');
+		const lossMessage = document.getElementById('loss-message');
+        winMessage.style.display = 'none';
+        lossMessage.style.display = 'none';
+	}
+	index = 0;
+}
 document.addEventListener('DOMContentLoaded', () => {
 	focusOnFirstBox(); // Call this function to set the focus on the first box
 	
@@ -86,18 +145,6 @@ document.addEventListener('DOMContentLoaded', () => {
 	});
 });
 
-function sendRowData(rowContainer) {
-	const boxElementsInRow = rowContainer.querySelectorAll('.box');
-	const rowData = [];
-	
-	boxElementsInRow.forEach((box) => {
-		const input = box.querySelector('input');
-		const value = input.value.toUpperCase();
-		rowData.push(value);
-	});
-	
-	sendRowDataToServer(rowData);
-}
 
 function isRowFilled(rowContainer) {
 	const boxElementsInRow = rowContainer.querySelectorAll('.box');
@@ -112,12 +159,14 @@ function isRowFilled(rowContainer) {
 
 function moveToNextRow(currentRowContainer) {
 	const nextRowContainer = currentRowContainer.nextElementSibling;
+	let validRow;
 	if (nextRowContainer) {
-		sendRowData(currentRowContainer);
+		validRow = sendRowData(currentRowContainer);
+		if (validRow == true) {
 		selectedBox.classList.remove('selected-box');
 		selectedBox = nextRowContainer.querySelector('.box');
 		selectedBox.classList.add('selected-box');
-		selectedBox.querySelector('input').focus();
+		selectedBox.querySelector('input').focus();}
 	} else {
 		if (isRowFilled(currentRowContainer)) {
 			sendRowData(currentRowContainer);
